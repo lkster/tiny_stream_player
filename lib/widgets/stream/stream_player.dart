@@ -31,6 +31,9 @@ final class _StreamPlayerState extends State<StreamPlayer> {
       }))
       ..add(widget.controller.isBufferingChange.listen((e) {
         setState(() {});
+      }))
+      ..add(widget.controller.isPlayingChange.listen((e) {
+        setState(() {});
       }));
   }
 
@@ -59,6 +62,26 @@ final class _StreamPlayerState extends State<StreamPlayer> {
         constraints.constrainHeight(),
       ));
 
+      final bufferingIndicator = Container(
+        color: Colors.black.withOpacity(.8),
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        ),
+      );
+
+      final pauseIndicator = Container(
+        color: Colors.black.withOpacity(.8),
+        child: Center(
+          child: Icon(
+            Icons.pause,
+            color: Colors.white.withOpacity(.65),
+            size: 120,
+          ),
+        ),
+      );
+
       return Stack(
         children: [
           Center(
@@ -72,7 +95,10 @@ final class _StreamPlayerState extends State<StreamPlayer> {
               ),
             ),
           ),
-          if(!widget.controller.isBuffering) StreamPlayerControls(controller: widget.controller),
+          if (widget.controller.isBuffering) bufferingIndicator,
+          if (!widget.controller.isPlaying) pauseIndicator,
+          if (!widget.controller.isBuffering)
+            StreamPlayerControls(controller: widget.controller),
         ],
       );
     });

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:rtsp_player/widgets/pan_and_zoom.dart';
 import 'package:rtsp_player/widgets/stream/stream_player_controller.dart';
 import 'package:rtsp_player/widgets/stream/stream_player_controls.dart';
 
@@ -85,13 +86,15 @@ final class _StreamPlayerState extends State<StreamPlayer> {
       return Stack(
         children: [
           Center(
-            child: SizedBox(
-              width: videoSize.width,
-              height: videoSize.height,
-              child: Video(
-                controller: widget.controller.videoController,
-                controls: null,
-                fit: BoxFit.fill,
+            child: PanAndZoom(
+              child: SizedBox(
+                width: videoSize.width,
+                height: videoSize.height,
+                child: Video(
+                  controller: widget.controller.videoController,
+                  controls: null,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),

@@ -14,6 +14,7 @@ void main() {
     appWindow.minSize = initialSize;
     appWindow.size = initialSize;
     appWindow.alignment = Alignment.center;
+    appWindow.title = 'Tiny Stream Player';
     appWindow.show();
   });
 }

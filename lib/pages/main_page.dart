@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiny_stream_player/preferences.dart';
+import 'package:tiny_stream_player/core/preferences.dart';
 import 'package:tiny_stream_player/widgets/add_stream_modal.dart';
 import 'package:tiny_stream_player/widgets/player/player.dart';
 import 'package:tiny_stream_player/widgets/stream/multi_stream_viewer.dart';
@@ -26,7 +26,7 @@ final class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
 
-    Preferences().loadStreams().then((value) {
+    Preferences().streams.load().then((value) {
       setState(() {
         streams = value;
         _areStreamsLoadedFromPreferences = true;
@@ -45,7 +45,7 @@ final class _MainPageState extends State<MainPage> {
 
   void _addNewStream(String resource) async {
     streams.add(StreamPlayerController()..open(resource));
-    await Preferences().saveStreams(streams);
+    await Preferences().streams.save(streams);
   }
 
   void _removeStream(int index) async {
@@ -58,7 +58,7 @@ final class _MainPageState extends State<MainPage> {
     controller.dispose();
     streams.removeAt(index);
 
-    await Preferences().saveStreams(streams);
+    await Preferences().streams.save(streams);
 
     setState(() {});
   }

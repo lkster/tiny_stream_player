@@ -94,7 +94,7 @@ BEGIN
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "Tiny Stream Player" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 Dominik Mielcarek. All rights reserved." "\0"
-            VALUE "OriginalFilename", "tiny_stream_player.exe" "\0"
+            VALUE "OriginalFilename", "tsp.exe" "\0"
             VALUE "ProductName", "Tiny Stream Player" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

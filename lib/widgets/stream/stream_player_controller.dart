@@ -11,9 +11,9 @@ final class StreamPlayerController {
   late final videoController = VideoController(player);
 
   Size _size = const Size(1, 1);
-  bool _isPlaying = false;
+  bool _isPlaying = true;
   bool _isMuted = false;
-  bool _isBuffering = false;
+  bool _isBuffering = true;
   String? _currentResource;
   late final StreamSubscription _subscriber;
 

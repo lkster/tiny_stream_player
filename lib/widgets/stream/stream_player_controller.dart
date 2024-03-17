@@ -70,11 +70,11 @@ final class StreamPlayerController {
     final instance = StreamPlayerController();
 
     if (data['resource'] != null) {
-      instance.open(data['resource']);
+      await instance.open(data['resource']);
     }
 
     if (data['isMuted'] == true) {
-      instance.muteOrUnmute();
+      await instance.muteOrUnmute();
     }
 
     return instance;

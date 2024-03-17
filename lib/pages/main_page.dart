@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rtsp_player/preferences.dart';
 import 'package:rtsp_player/widgets/add_stream_modal.dart';
 import 'package:rtsp_player/widgets/player/player.dart';
 import 'package:rtsp_player/widgets/stream/multi_stream_viewer.dart';
@@ -18,7 +19,20 @@ final class MainPage extends StatefulWidget {
 final class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   bool _addStreamModalShown = false;
+  bool _areStreamsLoadedFromPreferences = false;
   List<StreamPlayerController> streams = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    Preferences().loadStreams().then((value) {
+      setState(() {
+        streams = value;
+        _areStreamsLoadedFromPreferences = true;
+      });
+    });
+  }
 
   @override
   void dispose() async {
@@ -29,21 +43,24 @@ final class _MainPageState extends State<MainPage> {
     }
   }
 
-  void _addNewStream(String resource) {
+  void _addNewStream(String resource) async {
     streams.add(StreamPlayerController()..open(resource));
+    await Preferences().saveStreams(streams);
   }
 
-  void _removeStream(int index) {
+  void _removeStream(int index) async {
     if (index.clamp(0, streams.length - 1) != index) {
       return;
     }
 
-    setState(() {
-      final controller = streams[index];
+    final controller = streams[index];
 
-      controller.dispose();
-      streams.removeAt(index);
-    });
+    controller.dispose();
+    streams.removeAt(index);
+
+    await Preferences().saveStreams(streams);
+
+    setState(() {});
   }
 
   Widget _buildNoStreamsView() {
@@ -77,20 +94,28 @@ final class _MainPageState extends State<MainPage> {
     late final Widget streamsView;
 
     if (streams.isNotEmpty) {
-      final streamPlayers = streams.asMap().entries.map(
+      final streamPlayers = streams
+          .asMap()
+          .entries
+          .map(
             (entry) => StreamPlayer(
               controller: entry.value,
               onClose: () {
                 _removeStream(entry.key);
               },
             ),
-          ).toList();
+          )
+          .toList();
 
       streamsView = MultiStreamViewer(
         children: streamPlayers,
       );
     } else {
       streamsView = _buildNoStreamsView();
+    }
+
+    if (!_areStreamsLoadedFromPreferences) {
+      return Container();
     }
 
     return Stack(

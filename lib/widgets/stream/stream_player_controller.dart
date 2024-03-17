@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'dart:async';
 
@@ -14,6 +15,7 @@ final class StreamPlayerController {
   bool _isMuted = false;
   bool _isBuffering = false;
   String? _currentResource;
+  late final StreamSubscription _subscriber;
 
   Size get size => _size;
   bool get isPlaying => _isPlaying;
@@ -49,8 +51,40 @@ final class StreamPlayerController {
   late final Stream<bool> isBufferingChange = player.stream.buffering.doOnData(
     (event) {
       _isBuffering = event;
-    }
+    },
   ).asBroadcastStream();
+
+  StreamPlayerController() {
+    // so doOnData would fire even if there's no subscribers yet
+    // actually fixes correct state after loading streams from preferences
+    _subscriber = MergeStream([
+      isPlayingChange,
+      isMutedChange,
+      isBufferingChange,
+    ]).listen((value) {});
+  }
+
+  static Future<StreamPlayerController> fromJson(
+    Map<String, dynamic> data,
+  ) async {
+    final instance = StreamPlayerController();
+
+    if (data['resource'] != null) {
+      instance.open(data['resource']);
+    }
+
+    if (data['isMuted'] == true) {
+      instance.muteOrUnmute();
+    }
+
+    return instance;
+  }
+
+  Map<String, dynamic> toJson() => {
+        'version': 1,
+        'resource': _currentResource,
+        'isMuted': _isMuted,
+      };
 
   Future<void> open(String resource) async {
     _currentResource = resource;
@@ -75,6 +109,7 @@ final class StreamPlayerController {
   }
 
   Future<void> dispose() async {
+    _subscriber.cancel();
     await player.dispose();
   }
 }

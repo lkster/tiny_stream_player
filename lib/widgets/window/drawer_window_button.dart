@@ -1,14 +1,6 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
-
-final _defaultButtonColors = WindowButtonColors(
-  normal: Colors.transparent,
-  iconNormal: const Color(0xFF805306),
-  mouseOver: const Color(0xFF404040),
-  mouseDown: const Color(0xFF202020),
-  iconMouseOver: const Color(0xFFFFFFFF),
-  iconMouseDown: const Color(0xFFF0F0F0),
-);
+import 'package:rtsp_player/widgets/window/window_colors.dart';
 
 final class DrawerWindowButton extends WindowButton {
   DrawerWindowButton(
@@ -18,7 +10,7 @@ final class DrawerWindowButton extends WindowButton {
       bool? animate})
       : super(
             key: key,
-            colors: colors ?? _defaultButtonColors,
+            colors: colors ?? windowButtonColors,
             animate: animate ?? false,
             iconBuilder: (buttonContext) =>
                 _DrawerWindowButtonIcon(color: buttonContext.iconColor),

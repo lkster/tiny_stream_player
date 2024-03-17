@@ -36,12 +36,14 @@ final class WindowScene extends StatefulWidget {
 final class _WindowSceneState extends State<WindowScene> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
         WindowTitleBar(
           buttons: widget.buttons,
         ),
-        widget.child,
+        Expanded(
+          child: widget.child,
+        ),
       ],
     );
   }

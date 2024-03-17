@@ -7,10 +7,12 @@ import 'package:rxdart/rxdart.dart';
 
 final class StreamPlayerControls extends StatefulWidget {
   final StreamPlayerController controller;
+  final VoidCallback? onClose;
 
   const StreamPlayerControls({
     super.key,
     required this.controller,
+    this.onClose,
   });
 
   @override
@@ -41,35 +43,55 @@ final class _StreamPlayerControlsState extends State<StreamPlayerControls> {
     }
   }
 
-  Icon _createIcon(IconData iconData) => Icon(
-        iconData,
-        color: Colors.white,
-        size: 28,
-        shadows: const [
-          Shadow(color: Colors.black, blurRadius: 3),
-        ],
+  IconButton _createIconButton({
+    required VoidCallback onPressed,
+    required IconData icon,
+  }) =>
+      IconButton(
+        onPressed: onPressed,
+        icon: Icon(
+          icon,
+          color: Colors.white,
+          size: 28,
+          shadows: const [
+            Shadow(color: Colors.black, blurRadius: 3),
+            Shadow(color: Colors.black, blurRadius: 3),
+          ],
+        ),
       );
 
-  Widget _buildButtons() {
+  Widget _buildTopButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _createIconButton(
+          onPressed: widget.onClose ?? () {},
+          icon: Icons.close,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottomButtons() {
     return Row(
       children: [
-        IconButton(
+        _createIconButton(
           onPressed: () {
             widget.controller.playOrPause();
           },
-          icon: _createIcon(widget.controller.isPlaying ? Icons.pause : Icons.play_arrow),
+          icon: widget.controller.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
-        IconButton(
+        _createIconButton(
           onPressed: () {
             widget.controller.muteOrUnmute();
           },
-          icon: _createIcon(widget.controller.isMuted ? Icons.volume_off : Icons.volume_up),
+          icon: widget.controller.isMuted ? Icons.volume_off : Icons.volume_up,
         ),
-        IconButton(
+        _createIconButton(
           onPressed: () {
             widget.controller.reload();
           },
-          icon: _createIcon(Icons.refresh),
+          icon: Icons.refresh,
         ),
       ],
     );
@@ -79,9 +101,12 @@ final class _StreamPlayerControlsState extends State<StreamPlayerControls> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: _buildButtons(),
+      child: Column(
+        children: [
+          _buildTopButtons(),
+          Expanded(child: Container()),
+          _buildBottomButtons(),
+        ],
       ),
     );
   }

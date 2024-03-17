@@ -9,8 +9,13 @@ import 'package:rtsp_player/widgets/stream/stream_player_controls.dart';
 
 final class StreamPlayer extends StatefulWidget {
   final StreamPlayerController controller;
+  final VoidCallback? onClose;
 
-  const StreamPlayer({super.key, required this.controller});
+  const StreamPlayer({
+    super.key,
+    required this.controller,
+    this.onClose,
+  });
 
   @override
   State<StatefulWidget> createState() => _StreamPlayerState();
@@ -101,7 +106,10 @@ final class _StreamPlayerState extends State<StreamPlayer> {
           if (widget.controller.isBuffering) bufferingIndicator,
           if (!widget.controller.isPlaying) pauseIndicator,
           if (!widget.controller.isBuffering)
-            StreamPlayerControls(controller: widget.controller),
+            StreamPlayerControls(
+              controller: widget.controller,
+              onClose: widget.onClose,
+            ),
         ],
       );
     });

@@ -1,8 +1,7 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
-import 'package:rtsp_player/pages/main_page.dart';
-import 'package:rtsp_player/widgets/window/window_title_bar.dart';
+import 'package:tiny_stream_player/pages/main_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

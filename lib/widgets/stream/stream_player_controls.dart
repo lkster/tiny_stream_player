@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rtsp_player/widgets/stream/stream_player_controller.dart';
+import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
 import 'package:rxdart/rxdart.dart';
 
 final class StreamPlayerControls extends StatefulWidget {

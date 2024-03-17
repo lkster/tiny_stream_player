@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:rtsp_player/widgets/stream/stream_player_controller.dart';
+import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final class Preferences {
@@ -22,7 +22,9 @@ final class Preferences {
     final packedStreams =
         pref.getStringList('streams')?.map((e) => jsonDecode(e)).toList() ?? [];
 
-    packedStreams.removeAt(0);
+    if (packedStreams.isNotEmpty) {
+      packedStreams.removeAt(0);
+    }
 
     final List<StreamPlayerController> streams = [];
 

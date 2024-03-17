@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit_video/media_kit_video.dart';
-import 'package:rtsp_player/widgets/pan_and_zoom.dart';
-import 'package:rtsp_player/widgets/stream/stream_player_controller.dart';
-import 'package:rtsp_player/widgets/stream/stream_player_controls.dart';
+import 'package:tiny_stream_player/widgets/pan_and_zoom.dart';
+import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
+import 'package:tiny_stream_player/widgets/stream/stream_player_controls.dart';
 
 final class StreamPlayer extends StatefulWidget {
   final StreamPlayerController controller;

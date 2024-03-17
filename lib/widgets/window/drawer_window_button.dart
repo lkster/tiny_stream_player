@@ -1,6 +1,6 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
-import 'package:rtsp_player/widgets/window/window_colors.dart';
+import 'package:tiny_stream_player/widgets/window/window_colors.dart';
 
 final class DrawerWindowButton extends WindowButton {
   DrawerWindowButton(

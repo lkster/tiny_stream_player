@@ -1,7 +1,7 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:rtsp_player/widgets/window/drawer_window_button.dart';
-import 'package:rtsp_player/widgets/window/window_title_bar.dart';
+import 'package:tiny_stream_player/widgets/window/drawer_window_button.dart';
+import 'package:tiny_stream_player/widgets/window/window_title_bar.dart';
 
 final class WindowScene extends StatefulWidget {
   final Widget child;

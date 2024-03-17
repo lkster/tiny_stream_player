@@ -1,4 +1,4 @@
-# rtsp_player
+# tiny_stream_player
 
 rtsp player
 

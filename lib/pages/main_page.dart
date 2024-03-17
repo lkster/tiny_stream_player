@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rtsp_player/preferences.dart';
-import 'package:rtsp_player/widgets/add_stream_modal.dart';
-import 'package:rtsp_player/widgets/player/player.dart';
-import 'package:rtsp_player/widgets/stream/multi_stream_viewer.dart';
-import 'package:rtsp_player/widgets/stream/stream_player.dart';
-import 'package:rtsp_player/widgets/stream/stream_player_controller.dart';
+import 'package:tiny_stream_player/preferences.dart';
+import 'package:tiny_stream_player/widgets/add_stream_modal.dart';
+import 'package:tiny_stream_player/widgets/player/player.dart';
+import 'package:tiny_stream_player/widgets/stream/multi_stream_viewer.dart';
+import 'package:tiny_stream_player/widgets/stream/stream_player.dart';
+import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
 
-import 'package:rtsp_player/widgets/window/window_scene.dart';
+import 'package:tiny_stream_player/widgets/window/window_scene.dart';
 
 final class MainPage extends StatefulWidget {
   const MainPage({super.key});

@@ -1,11 +1,14 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
-import 'package:rtsp_player/widgets/window_title_bar.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:rtsp_player/pages/main_page.dart';
+import 'package:rtsp_player/widgets/window/window_title_bar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 
   doWhenWindowReady(() {
     const initialSize = Size(600, 450);
@@ -17,7 +20,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -28,13 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-      home: Scaffold(
-        body: Stack(
-          children: [
-            WindowTitleBar(),
-          ],
-        )
-      ),
+      home: MainPage(),
     );
   }
 }

@@ -28,6 +28,7 @@ final class _StreamPlayerControlsState extends State<StreamPlayerControls> {
 
     _subscribers.add(MergeStream([
       widget.controller.isPlayingChange,
+      widget.controller.isBufferingChange,
       widget.controller.isMutedChange,
     ]).listen((event) {
       setState(() {});
@@ -46,19 +47,20 @@ final class _StreamPlayerControlsState extends State<StreamPlayerControls> {
   IconButton _createIconButton({
     required VoidCallback onPressed,
     required IconData icon,
-  }) =>
-      IconButton(
-        onPressed: onPressed,
-        icon: Icon(
-          icon,
-          color: Colors.white,
-          size: 28,
-          shadows: const [
-            Shadow(color: Colors.black, blurRadius: 3),
-            Shadow(color: Colors.black, blurRadius: 3),
-          ],
-        ),
-      );
+  }) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+        color: Colors.white,
+        size: 28,
+        shadows: const [
+          Shadow(color: Colors.black, blurRadius: 3),
+          Shadow(color: Colors.black, blurRadius: 3),
+        ],
+      ),
+    );
+  }
 
   Widget _buildTopButtons() {
     return Row(
@@ -97,17 +99,51 @@ final class _StreamPlayerControlsState extends State<StreamPlayerControls> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildControlsLayer() {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           _buildTopButtons(),
           Expanded(child: Container()),
-          _buildBottomButtons(),
+          if (!widget.controller.isBuffering) _buildBottomButtons(),
         ],
       ),
+    );
+  }
+
+  Widget _buildBufferingIndicator() {
+    return Container(
+      color: Colors.black.withOpacity(.8),
+      child: const Center(
+        child: CircularProgressIndicator(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPauseIndicator() {
+    return Container(
+      color: Colors.black.withOpacity(.8),
+      child: Center(
+        child: Icon(
+          Icons.pause,
+          color: Colors.white.withOpacity(.65),
+          size: 120,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        if (!widget.controller.isPlaying) _buildPauseIndicator(),
+        if (widget.controller.isBuffering) _buildBufferingIndicator(),
+        _buildControlsLayer(),
+      ],
     );
   }
 }

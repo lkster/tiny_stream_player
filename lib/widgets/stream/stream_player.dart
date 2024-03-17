@@ -29,18 +29,11 @@ final class _StreamPlayerState extends State<StreamPlayer> {
   void initState() {
     super.initState();
 
-    _subscribers
-      ..add(widget.controller.sizeChange.listen((e) {
-        setState(() {
-          _aspectRatio = e.width / e.height;
-        });
-      }))
-      ..add(widget.controller.isBufferingChange.listen((e) {
-        setState(() {});
-      }))
-      ..add(widget.controller.isPlayingChange.listen((e) {
-        setState(() {});
-      }));
+    _subscribers.add(widget.controller.sizeChange.listen((e) {
+      setState(() {
+        _aspectRatio = e.width / e.height;
+      });
+    }));
   }
 
   @override
@@ -68,26 +61,6 @@ final class _StreamPlayerState extends State<StreamPlayer> {
         constraints.constrainHeight(),
       ));
 
-      final bufferingIndicator = Container(
-        color: Colors.black.withOpacity(.8),
-        child: const Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-          ),
-        ),
-      );
-
-      final pauseIndicator = Container(
-        color: Colors.black.withOpacity(.8),
-        child: Center(
-          child: Icon(
-            Icons.pause,
-            color: Colors.white.withOpacity(.65),
-            size: 120,
-          ),
-        ),
-      );
-
       return Stack(
         children: [
           Center(
@@ -103,13 +76,10 @@ final class _StreamPlayerState extends State<StreamPlayer> {
               ),
             ),
           ),
-          if (widget.controller.isBuffering) bufferingIndicator,
-          if (!widget.controller.isPlaying) pauseIndicator,
-          if (!widget.controller.isBuffering)
-            StreamPlayerControls(
-              controller: widget.controller,
-              onClose: widget.onClose,
-            ),
+          StreamPlayerControls(
+            controller: widget.controller,
+            onClose: widget.onClose,
+          ),
         ],
       );
     });

@@ -14,7 +14,7 @@ void main() async {
 
   runApp(MyApp());
 
-  doWhenWindowReady(() async {
+  doWhenWindowReady(() {
     initAppWindow();
   });
 }

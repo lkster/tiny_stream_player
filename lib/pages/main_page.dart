@@ -46,13 +46,16 @@ final class _MainPageState extends State<MainPage> {
 
   void _initStreams() async {
     streams = await Preferences().streams.load();
-    _areStreamsLoadedFromPreferences = true;
 
     for (var stream in streams) {
       _subscribers.add(stream.isMutedChange.listen((event) async {
         await Preferences().streams.save(streams);
       }));
     }
+
+    setState(() {
+      _areStreamsLoadedFromPreferences = true;
+    });
   }
 
   void _addNewStream(String resource) async {

@@ -3,11 +3,13 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:window_manager/window_manager.dart';
 
 final class PanAndZoom extends StatefulWidget {
   Widget child;
   final double minZoom = 1;
-  final double maxZoom = 5;
+  final double maxZoom = 15;
   final double zoomFactor = 0.1;
 
   PanAndZoom({super.key, required this.child});
@@ -16,31 +18,66 @@ final class PanAndZoom extends StatefulWidget {
   State<StatefulWidget> createState() => _PanAndZoomWidgetState();
 }
 
-final class _PanAndZoomWidgetState extends State<PanAndZoom> with WidgetsBindingObserver {
+final class _PanAndZoomWidgetState extends State<PanAndZoom>
+    with WindowListener {
   double scale = 1;
   Offset position = const Offset(0, 0);
+  Offset _cachedPosition = const Offset(0, 0);
   final GlobalKey _childKey = GlobalKey();
   final GlobalKey _parentKey = GlobalKey();
+  late Size _previousChildSize;
+  bool _listenForSizeChangeOnce = false;
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addObserver(this);
+    _previousChildSize = _getChildSize();
+
+    windowManager.addListener(this);
   }
 
   @override
   void dispose() {
     super.dispose();
 
-    WidgetsBinding.instance.removeObserver(this);
+    windowManager.removeListener(this);
   }
 
   @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
+  void onWindowResize() {
+    super.onWindowResize();
 
-    _fixPosition();
+    _recalculatePositionAfterChildSizeChange();
+  }
+
+  @override
+  void onWindowMaximize() {
+    _listenForSizeChangeOnce = true;
+
+    super.onWindowMaximize();
+  }
+
+  @override
+  void onWindowUnmaximize() {
+    _listenForSizeChangeOnce = true;
+
+    super.onWindowUnmaximize();
+  }
+
+  void _recalculatePositionAfterChildSizeChange() {
+    final currentChildSize = _getChildSize();
+    final Offset delta = Offset(
+      currentChildSize.width / _previousChildSize.width,
+      currentChildSize.height / _previousChildSize.height,
+    );
+
+    setState(() {
+      _cachedPosition = _cachedPosition.scale(delta.dx, delta.dy);
+      _previousChildSize = currentChildSize;
+      position = _cachedPosition;
+      _fixPosition();
+    });
   }
 
   void _onScrollWheel(PointerScrollEvent e) {
@@ -49,6 +86,7 @@ final class _PanAndZoomWidgetState extends State<PanAndZoom> with WidgetsBinding
     setState(() {
       scale *= 1 + widget.zoomFactor * -delta;
       scale = scale.clamp(widget.minZoom, widget.maxZoom);
+      _previousChildSize = _getChildSize();
       _fixPosition();
     });
   }
@@ -69,6 +107,8 @@ final class _PanAndZoomWidgetState extends State<PanAndZoom> with WidgetsBinding
 
     setState(() {
       position = Offset(posX, posY);
+      _cachedPosition = position;
+      _previousChildSize = childSize;
       _fixPosition();
     });
   }
@@ -123,10 +163,31 @@ final class _PanAndZoomWidgetState extends State<PanAndZoom> with WidgetsBinding
   }
 
   Widget _buildTransform(Widget child) {
-    return Transform.scale(
-      scale: scale,
-      child: Transform.translate(
-        offset: position,
+    return Transform(
+      transform: Matrix4.identity()
+        ..scale(scale)
+        ..translate(position.dx, position.dy),
+      alignment: FractionalOffset.center,
+      child: child,
+    );
+  }
+
+  /// [onWindowMaximize] and [onWindowUnmaximize] is fired before render actually happens hence there's a need
+  /// to somehow listen for one change and update child's size once it's been changed
+  Widget _buildSizeChangeListener(Widget child) {
+    return NotificationListener<SizeChangedLayoutNotification>(
+      onNotification: (notification) {
+        if (!_listenForSizeChangeOnce) {
+          return false;
+        }
+
+        _listenForSizeChangeOnce = false;
+
+        Future.microtask(() => _recalculatePositionAfterChildSizeChange());
+
+        return false;
+      },
+      child: SizeChangedLayoutNotifier(
         child: child,
       ),
     );
@@ -141,10 +202,11 @@ final class _PanAndZoomWidgetState extends State<PanAndZoom> with WidgetsBinding
           color: Colors.black,
           child: _buildTransform(
             Center(
-                child: Container(
-              key: _childKey,
-              child: widget.child,
-            )),
+              child: Container(
+                key: _childKey,
+                child: _buildSizeChangeListener(widget.child),
+              ),
+            ),
           ),
         ),
       ),

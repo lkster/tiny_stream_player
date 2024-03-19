@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:tiny_stream_player/core/preferences.dart';
 import 'package:tiny_stream_player/widgets/add_stream_modal.dart';
 import 'package:tiny_stream_player/widgets/layout/button.dart';
+import 'package:tiny_stream_player/widgets/layout/drawer.dart';
+import 'package:tiny_stream_player/widgets/layout/drawer_button.dart';
 import 'package:tiny_stream_player/widgets/stream/multi_stream_viewer.dart';
 import 'package:tiny_stream_player/widgets/stream/stream_player.dart';
 import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
@@ -23,6 +25,7 @@ final class MainPage extends StatefulWidget {
 final class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final GlobalKey<AddStreamModalState> _addStreamModalKey = GlobalKey();
+  final GlobalKey<TspDrawerState> _drawerKey = GlobalKey();
   bool _areStreamsLoadedFromPreferences = false;
   List<StreamPlayerController> streams = [];
   final List<StreamSubscription> _subscribers = [];
@@ -142,6 +145,19 @@ final class _MainPageState extends State<MainPage> {
             });
           },
         ),
+        TspDrawer(
+          key: _drawerKey,
+          buttons: [
+            TspDrawerButton(
+              icon: Icons.video_camera_back,
+              text: 'Add Stream',
+              onPressed: () {
+                _addStreamModalKey.currentState!.openModal();
+                _drawerKey.currentState!.closeDrawer();
+              },
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -152,29 +168,15 @@ final class _MainPageState extends State<MainPage> {
       key: _scaffoldKey,
       body: WindowScene.withDrawerButton(
         onDrawerPressed: () {
-          _scaffoldKey.currentState!.openDrawer();
+          if (_drawerKey.currentState!.drawerOpened) {
+            _drawerKey.currentState!.closeDrawer();
+          } else {
+            _drawerKey.currentState!.openDrawer();
+          }
         },
         child: Container(
           color: ThemeColors.gray1000,
           child: _buildBody(),
-        ),
-      ),
-      drawer: Drawer(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-        ),
-        child: ListView(
-          children: [
-            ListTile(
-              title: const Text('Add stream'),
-              onTap: () {
-                setState(() {
-                  _addStreamModalKey.currentState!.openModal();
-                  _scaffoldKey.currentState!.closeDrawer();
-                });
-              },
-            ),
-          ],
         ),
       ),
     );

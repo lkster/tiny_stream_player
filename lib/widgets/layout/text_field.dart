@@ -47,9 +47,6 @@ final class _TspTextFieldState extends State<TspTextField> {
           color: ThemeColors.gray400,
           fontWeight: FontWeight.w400,
         ),
-        constraints: const BoxConstraints(
-          minHeight: 0,
-        ),
         border: _border,
         enabledBorder: _border,
         focusedBorder: _border,
@@ -63,6 +60,7 @@ final class _TspTextFieldState extends State<TspTextField> {
         color: _focusNode.hasFocus ? Colors.white : ThemeColors.gray200,
         fontSize: 16,
       ),
+      cursorColor: Colors.white,
     );
   }
 }

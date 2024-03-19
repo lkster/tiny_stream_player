@@ -63,10 +63,10 @@ final class TspModalState extends State<TspModal> {
       width: 500,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
-        color: ThemeColors.gray700,
+        color: ThemeColors.gray[700],
         border: Border.all(
           width: 1,
-          color: ThemeColors.gray600,
+          color: ThemeColors.gray[600]!,
         ),
       ),
       child: Column(
@@ -86,12 +86,12 @@ final class TspModalState extends State<TspModal> {
   Widget _buildModalHeader() {
     return widget.title != null
         ? Container(
-            decoration: const BoxDecoration(
-              color: ThemeColors.gray800,
+            decoration: BoxDecoration(
+              color: ThemeColors.gray[800],
               border: Border(
                 bottom: BorderSide(
                   width: 1,
-                  color: ThemeColors.gray900,
+                  color: ThemeColors.gray[900]!,
                 ),
               ),
             ),
@@ -102,8 +102,8 @@ final class TspModalState extends State<TspModal> {
                 children: [
                   Text(
                     widget.title!,
-                    style: const TextStyle(
-                      color: ThemeColors.gray100,
+                    style: TextStyle(
+                      color: ThemeColors.gray[100],
                       fontWeight: FontWeight.w500,
                       // fontSize: 16,
                     ),
@@ -140,12 +140,12 @@ final class TspModalState extends State<TspModal> {
   Widget _buildModalFooter() {
     return widget.footer != null
         ? Container(
-            decoration: const BoxDecoration(
-              color: ThemeColors.gray800,
+            decoration: BoxDecoration(
+              color: ThemeColors.gray[800],
               border: Border(
                 top: BorderSide(
                   width: 1,
-                  color: ThemeColors.gray900,
+                  color: ThemeColors.gray[900]!,
                 ),
               ),
             ),

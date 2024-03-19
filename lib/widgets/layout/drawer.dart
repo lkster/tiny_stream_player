@@ -64,7 +64,7 @@ final class TspDrawerState extends State<TspDrawer> {
         ? _buildOverlay(
             Container(
               decoration: BoxDecoration(
-                color: ThemeColors.gray800,
+                color: ThemeColors.gray[800],
                 boxShadow: [
                   BoxShadow(
                     offset: const Offset(0, 5),

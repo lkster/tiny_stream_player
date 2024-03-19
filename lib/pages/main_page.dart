@@ -175,7 +175,7 @@ final class _MainPageState extends State<MainPage> {
           }
         },
         child: Container(
-          color: ThemeColors.gray1000,
+          color: ThemeColors.gray[1000],
           child: _buildBody(),
         ),
       ),

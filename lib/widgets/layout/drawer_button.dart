@@ -45,7 +45,7 @@ final class _TspDrawerButtonState extends State<TspDrawerButton> {
             RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(4)),
               side: BorderSide(
-                color: Color.lerp(ThemeColors.gray700, Colors.white, 0.05)!,
+                color: Color.lerp(ThemeColors.gray[700], Colors.white, 0.05)!,
                 width: 1,
               ),
             ),
@@ -61,14 +61,14 @@ final class _TspDrawerButtonState extends State<TspDrawerButton> {
           padding: MaterialStateProperty.all(const EdgeInsets.all(15)),
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed) || widget.selected) {
-              return ThemeColors.gray900;
+              return ThemeColors.gray[900];
             }
 
             if (states.contains(MaterialState.hovered)) {
-              return Color.lerp(ThemeColors.gray700, Colors.white, 0.05)!;
+              return Color.lerp(ThemeColors.gray[700], Colors.white, 0.05)!;
             }
 
-            return ThemeColors.gray700;
+            return ThemeColors.gray[700];
           }),
         ),
         child: Column(

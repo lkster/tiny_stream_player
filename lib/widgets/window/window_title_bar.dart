@@ -95,12 +95,12 @@ final class _WindowTitleBarState extends State<WindowTitleBar>
   Widget build(BuildContext context) {
     return Container(
       height: appWindow.titleBarHeight + 1,
-      decoration: const BoxDecoration(
-        color: ThemeColors.gray700,
+      decoration: BoxDecoration(
+        color: ThemeColors.gray[700],
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: ThemeColors.gray900,
+            color: ThemeColors.gray[900]!,
           ),
         ),
       ),

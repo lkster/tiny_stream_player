@@ -26,7 +26,7 @@ final class _TspIconButtonState extends State<TspIconButton> {
         overlayColor: MaterialStateProperty.all(Colors.transparent),
         iconColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.pressed)) {
-            return ThemeColors.gray100;
+            return ThemeColors.gray[100];
           }
 
           if (states.contains(MaterialState.hovered)) {

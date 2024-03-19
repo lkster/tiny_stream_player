@@ -21,7 +21,7 @@ final class _TspTextFieldState extends State<TspTextField> {
     borderRadius: BorderRadius.circular(4),
     borderSide: BorderSide(
       width: 1,
-      color: Color.lerp(ThemeColors.gray900, Colors.black, 0.1)!,
+      color: Color.lerp(ThemeColors.gray[900], Colors.black, 0.1)!,
       style: BorderStyle.solid,
     ),
   );
@@ -43,8 +43,8 @@ final class _TspTextFieldState extends State<TspTextField> {
         contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         hintText: widget.hintText,
         isDense: true,
-        hintStyle: const TextStyle(
-          color: ThemeColors.gray400,
+        hintStyle: TextStyle(
+          color: ThemeColors.gray[400],
           fontWeight: FontWeight.w400,
         ),
         border: _border,
@@ -52,12 +52,12 @@ final class _TspTextFieldState extends State<TspTextField> {
         focusedBorder: _border,
         filled: true,
         fillColor: _focusNode.hasFocus
-            ? Color.lerp(ThemeColors.gray900, Colors.white, 0.02)
-            : ThemeColors.gray900,
-        hoverColor: ThemeColors.gray900,
+            ? Color.lerp(ThemeColors.gray[900], Colors.white, 0.02)
+            : ThemeColors.gray[900],
+        hoverColor: ThemeColors.gray[900],
       ),
       style: TextStyle(
-        color: _focusNode.hasFocus ? Colors.white : ThemeColors.gray200,
+        color: _focusNode.hasFocus ? Colors.white : ThemeColors.gray[200],
         fontSize: 16,
       ),
       cursorColor: Colors.white,

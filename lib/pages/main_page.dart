@@ -4,11 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_stream_player/core/preferences.dart';
 import 'package:tiny_stream_player/widgets/add_stream_modal.dart';
+import 'package:tiny_stream_player/widgets/layout/button.dart';
 import 'package:tiny_stream_player/widgets/stream/multi_stream_viewer.dart';
 import 'package:tiny_stream_player/widgets/stream/stream_player.dart';
 import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
 
 import 'package:tiny_stream_player/widgets/window/window_scene.dart';
+
+import '../core/colors.dart';
 
 final class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -19,10 +22,10 @@ final class MainPage extends StatefulWidget {
 
 final class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  bool _addStreamModalShown = false;
+  final GlobalKey<AddStreamModalState> _addStreamModalKey = GlobalKey();
   bool _areStreamsLoadedFromPreferences = false;
   List<StreamPlayerController> streams = [];
-  List<StreamSubscription> _subscribers = [];
+  final List<StreamSubscription> _subscribers = [];
 
   @override
   void initState() {
@@ -89,15 +92,10 @@ final class _MainPageState extends State<MainPage> {
             style: TextStyle(color: Colors.white54),
           ),
           Container(height: 15),
-          TextButton(
+          TspButton.primary(
             onPressed: () {
-              setState(() {
-                _addStreamModalShown = true;
-              });
+              _addStreamModalKey.currentState!.openModal();
             },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
             child: const Text('Add Stream'),
           ),
         ],
@@ -136,20 +134,14 @@ final class _MainPageState extends State<MainPage> {
     return Stack(
       children: [
         streamsView,
-        if (_addStreamModalShown)
-          AddStreamModal(
-            onSubmit: (String resource) {
-              setState(() {
-                _addNewStream(resource);
-                _addStreamModalShown = false;
-              });
-            },
-            onCancel: () {
-              setState(() {
-                _addStreamModalShown = false;
-              });
-            },
-          ),
+        AddStreamModal(
+          key: _addStreamModalKey,
+          onSubmit: (String resource) {
+            setState(() {
+              _addNewStream(resource);
+            });
+          },
+        ),
       ],
     );
   }
@@ -163,7 +155,7 @@ final class _MainPageState extends State<MainPage> {
           _scaffoldKey.currentState!.openDrawer();
         },
         child: Container(
-          color: Colors.black,
+          color: ThemeColors.gray1000,
           child: _buildBody(),
         ),
       ),
@@ -177,7 +169,7 @@ final class _MainPageState extends State<MainPage> {
               title: const Text('Add stream'),
               onTap: () {
                 setState(() {
-                  _addStreamModalShown = true;
+                  _addStreamModalKey.currentState!.openModal();
                   _scaffoldKey.currentState!.closeDrawer();
                 });
               },

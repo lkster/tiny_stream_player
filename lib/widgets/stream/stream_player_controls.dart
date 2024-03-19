@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_stream_player/widgets/layout/icon_button.dart';
 import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -44,16 +44,14 @@ final class _StreamPlayerControlsState extends State<StreamPlayerControls> {
     }
   }
 
-  IconButton _createIconButton({
+  TspIconButton _createIconButton({
     required VoidCallback onPressed,
     required IconData icon,
   }) {
-    return IconButton(
+    return TspIconButton(
       onPressed: onPressed,
       icon: Icon(
         icon,
-        color: Colors.white,
-        size: 28,
         shadows: const [
           Shadow(color: Colors.black, blurRadius: 3),
           Shadow(color: Colors.black, blurRadius: 3),

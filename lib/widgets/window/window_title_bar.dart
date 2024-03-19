@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiny_stream_player/core/colors.dart';
 import 'package:tiny_stream_player/widgets/window/drawer_window_button.dart';
 import 'package:tiny_stream_player/widgets/window/window_colors.dart';
 
@@ -74,7 +75,7 @@ final class _WindowTitleBarState extends State<WindowTitleBar>
 
   Widget _buildAppTitle() {
     return Padding(
-      padding: EdgeInsets.only(left: 8),
+      padding: const EdgeInsets.only(left: 8),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
@@ -92,7 +93,17 @@ final class _WindowTitleBarState extends State<WindowTitleBar>
 
   @override
   Widget build(BuildContext context) {
-    return WindowTitleBarBox(
+    return Container(
+      height: appWindow.titleBarHeight + 1,
+      decoration: const BoxDecoration(
+        color: ThemeColors.gray700,
+        border: Border(
+          bottom: BorderSide(
+            width: 1,
+            color: ThemeColors.gray900,
+          ),
+        ),
+      ),
       child: Row(
         children: [
           Row(
@@ -113,7 +124,7 @@ final class _WindowTitleBarState extends State<WindowTitleBar>
                 colors: _closeButtonColors,
               ),
             ],
-          )
+          ),
         ],
       ),
     );

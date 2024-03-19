@@ -19,34 +19,58 @@ final class TspModal extends StatefulWidget {
   State<StatefulWidget> createState() => TspModalState();
 }
 
-final class TspModalState extends State<TspModal> {
-  bool _modalShown = false;
+final class TspModalState extends State<TspModal>
+    with SingleTickerProviderStateMixin {
+  late final _animationController = AnimationController(
+    duration: const Duration(milliseconds: 200),
+    vsync: this,
+  );
+  late final _easeAnimation =
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut);
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController.addListener(() {
+      setState(() {});
+    });
+  }
 
   void openModal() {
     setState(() {
-      _modalShown = true;
+      _animationController.forward();
     });
   }
 
   void closeModal() {
     setState(() {
-      _modalShown = false;
+      _animationController.reverse();
     });
   }
 
   Widget _buildOverlay(Widget child) {
     return Stack(
+      key: const ValueKey(1),
       children: [
         ClipRect(
           child: GestureDetector(
             onTap: closeModal,
             child: BackdropFilter(
               filter: ImageFilter.blur(
-                sigmaX: 5,
-                sigmaY: 5,
+                sigmaX: Tween<double>(begin: 0, end: 5)
+                    .animate(_easeAnimation)
+                    .value,
+                sigmaY: Tween<double>(begin: 0, end: 5)
+                    .animate(_easeAnimation)
+                    .value,
               ),
               child: Container(
-                color: Colors.black.withOpacity(.75),
+                color: Colors.black.withOpacity(
+                  Tween<double>(begin: 0, end: 0.75)
+                      .animate(_easeAnimation)
+                      .value,
+                ),
               ),
             ),
           ),
@@ -59,26 +83,52 @@ final class TspModalState extends State<TspModal> {
   }
 
   Widget _buildModal(Widget child) {
-    return Container(
-      width: 500,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        color: ThemeColors.gray[700],
-        border: Border.all(
-          width: 1,
-          color: ThemeColors.gray[600]!,
+    return Opacity(
+      opacity: _animationController.value,
+      child: ClipRect(
+        child: Stack(
+          children: [
+            Transform.scale(
+              scale:
+              Tween<double>(begin: .9, end: 1).animate(_easeAnimation).value,
+              child: Center(
+                child: Container(
+                  width: 500,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: ThemeColors.gray[700],
+                    border: Border.all(
+                      width: 1,
+                      color: ThemeColors.gray[600]!,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildModalHeader(),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: child,
+                      ),
+                      _buildModalFooter(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: Tween<double>(begin: 5, end: 0)
+                    .animate(_easeAnimation)
+                    .value,
+                sigmaY: Tween<double>(begin: 5, end: 0)
+                    .animate(_easeAnimation)
+                    .value,
+              ),
+              child: Container(),
+            ),
+          ],
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildModalHeader(),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: child,
-          ),
-          _buildModalFooter(),
-        ],
       ),
     );
   }
@@ -159,12 +209,10 @@ final class TspModalState extends State<TspModal> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_modalShown) {
-      return Container();
-    }
-
-    return _buildOverlay(
-      _buildModal(widget.body),
-    );
+    return _animationController.value > 0
+        ? _buildOverlay(
+            _buildModal(widget.body),
+          )
+        : Container();
   }
 }

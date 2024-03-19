@@ -35,6 +35,7 @@ final class _TspButtonState extends State<TspButton> {
     return TextButton(
       onPressed: widget.onPressed,
       style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(Colors.white.withOpacity(0.05)),
         backgroundColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.pressed)) {
             return widget.colorSet.backgroundPressed;

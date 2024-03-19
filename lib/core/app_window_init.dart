@@ -6,7 +6,7 @@ import 'package:tiny_stream_player/core/preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> initAppWindow() async {
-  const initialSize = Size(600, 450);
+  const initialSize = Size(300, 200);
 
   appWindow.minSize = initialSize;
   appWindow.alignment = Alignment.center;

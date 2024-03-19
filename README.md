@@ -1,16 +1,14 @@
-# tiny_stream_player
+# Tiny Stream Player
 
-rtsp player
+Just a small player that can play video streams. I need to watch for my dog in living room while working 
+and couldn't find anything small and with simple features such as pan and zoom.
 
-## Getting Started
+## Features
+- Opening multiple streams (RTSP, RTMP, HSL and everything else [media_kit](https://github.com/media-kit/media-kit) supports)
+- Zoom and pan streams
+- Mute/pause/reload streams
+- Saving streams to automatically load them on app startup
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This app is intended to show live streams hence there's no trackbar. Also, it's supposed to be 
+very simple - it should load stream and open it on app startup automatically, so I can just open it and
+have stream loaded out-of-box. I've also treated it a little as my Flutter sandbox.

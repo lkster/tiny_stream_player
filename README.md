@@ -8,6 +8,7 @@ and couldn't find anything small and with simple features such as pan and zoom.
 - Zoom and pan streams
 - Mute/pause/reload streams
 - Saving streams to automatically load them on app startup
+- Setting window always on top
 
 This app is intended to show live streams hence there's no trackbar. Also, it's supposed to be 
 very simple - it should load stream and open it on app startup automatically, so I can just open it and

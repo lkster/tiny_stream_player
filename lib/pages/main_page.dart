@@ -12,6 +12,7 @@ import 'package:tiny_stream_player/widgets/stream/stream_player.dart';
 import 'package:tiny_stream_player/widgets/stream/stream_player_controller.dart';
 
 import 'package:tiny_stream_player/widgets/window/window_scene.dart';
+import 'package:window_manager/window_manager.dart';
 
 import '../core/colors.dart';
 
@@ -29,12 +30,15 @@ final class _MainPageState extends State<MainPage> {
   bool _areStreamsLoadedFromPreferences = false;
   List<StreamPlayerController> streams = [];
   final List<StreamSubscription> _subscribers = [];
+  bool _isAlwaysOnTop = false;
 
   @override
   void initState() {
     super.initState();
 
     _initStreams();
+
+    windowManager.isAlwaysOnTop().then((value) => _isAlwaysOnTop = value);
   }
 
   @override
@@ -154,6 +158,20 @@ final class _MainPageState extends State<MainPage> {
               onPressed: () {
                 _addStreamModalKey.currentState!.openModal();
                 _drawerKey.currentState!.closeDrawer();
+              },
+            ),
+            TspDrawerButton(
+              icon: Icons.copy_outlined,
+              text: 'Always on Top',
+              iconColor: ThemeColors.warning,
+              selected: _isAlwaysOnTop,
+              onPressed: () {
+                windowManager.setAlwaysOnTop(!_isAlwaysOnTop).then((value) {
+                  setState(() {
+                    _isAlwaysOnTop = !_isAlwaysOnTop;
+                    Preferences().windowAlwaysOnTop.save(_isAlwaysOnTop);
+                  });
+                });
               },
             ),
           ],

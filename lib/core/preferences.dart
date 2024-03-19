@@ -16,6 +16,9 @@ final class Preferences {
   WindowPositionPreference get windowPosition =>
       WindowPositionPreference(preferences);
 
+  WindowAlwaysOnTopPreference get windowAlwaysOnTop =>
+      WindowAlwaysOnTopPreference(preferences);
+
   factory Preferences() => _singleton;
 
   Preferences._new();
@@ -108,5 +111,19 @@ final class WindowPositionPreference extends Preference<Offset> {
   Future<void> save(Offset data) async {
     await preferences.setDouble('window_pos_x', data.dx);
     await preferences.setDouble('window_pos_y', data.dy);
+  }
+}
+
+final class WindowAlwaysOnTopPreference extends Preference<bool> {
+  WindowAlwaysOnTopPreference(super.preferences);
+
+  @override
+  Future<bool> load() {
+    return Future.value(preferences.getBool('window_always_on_top') ?? false);
+  }
+
+  @override
+  Future<void> save(bool data) async {
+    await preferences.setBool('window_always_on_top', data);
   }
 }

@@ -16,10 +16,11 @@ Future<void> initAppWindow() async {
   windowManager.setSize((await Preferences().windowSize.load()) ?? initialSize);
 
   final windowPosition = await Preferences().windowPosition.load();
-
   if (windowPosition != null) {
     await windowManager.setPosition(windowPosition);
   }
+
+  await windowManager.setAlwaysOnTop(await Preferences().windowAlwaysOnTop.load());
 
   appWindow.show();
 }

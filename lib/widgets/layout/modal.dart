@@ -35,19 +35,26 @@ final class TspModalState extends State<TspModal> {
   }
 
   Widget _buildOverlay(Widget child) {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: 5,
-          sigmaY: 5,
-        ),
-        child: Container(
-          color: Colors.black.withOpacity(.75),
-          child: Center(
-            child: child,
+    return Stack(
+      children: [
+        ClipRect(
+          child: GestureDetector(
+            onTap: closeModal,
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 5,
+                sigmaY: 5,
+              ),
+              child: Container(
+                color: Colors.black.withOpacity(.75),
+              ),
+            ),
           ),
         ),
-      ),
+        Center(
+          child: child,
+        ),
+      ],
     );
   }
 

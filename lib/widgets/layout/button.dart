@@ -17,13 +17,13 @@ final class TspButton extends StatefulWidget {
     super.key,
     required this.onPressed,
     required this.child,
-  }): colorSet = primaryButtonColorSet;
+  }) : colorSet = primaryButtonColorSet;
 
   TspButton.secondary({
     super.key,
     required this.onPressed,
     required this.child,
-  }): colorSet = secondaryButtonColorSet;
+  }) : colorSet = secondaryButtonColorSet;
 
   @override
   State<StatefulWidget> createState() => _TspButtonState();

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_stream_player/core/preferences.dart';
 import 'package:tiny_stream_player/widgets/add_stream_modal.dart';

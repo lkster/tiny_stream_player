@@ -89,8 +89,9 @@ final class TspModalState extends State<TspModal>
         child: Stack(
           children: [
             Transform.scale(
-              scale:
-              Tween<double>(begin: .9, end: 1).animate(_easeAnimation).value,
+              scale: Tween<double>(begin: .9, end: 1)
+                  .animate(_easeAnimation)
+                  .value,
               child: Center(
                 child: Container(
                   width: 500,
@@ -107,7 +108,7 @@ final class TspModalState extends State<TspModal>
                     children: [
                       _buildModalHeader(),
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: child,
                       ),
                       _buildModalFooter(),

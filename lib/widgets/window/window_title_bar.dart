@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_stream_player/core/colors.dart';
-import 'package:tiny_stream_player/widgets/window/drawer_window_button.dart';
 import 'package:tiny_stream_player/widgets/window/window_colors.dart';
 
 final class WindowTitleBar extends StatefulWidget {

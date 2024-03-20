@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_stream_player/core/colors.dart';
 
@@ -43,7 +42,7 @@ final class _TspDrawerButtonState extends State<TspDrawerButton> {
           fixedSize: MaterialStateProperty.all(const Size(120, 120)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
               side: BorderSide(
                 color: Color.lerp(ThemeColors.gray[700], Colors.white, 0.05)!,
                 width: 1,

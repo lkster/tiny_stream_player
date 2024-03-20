@@ -30,9 +30,7 @@ final class AddStreamModalState extends State<AddStreamModal> {
   }
 
   void _onSubmit() {
-    if (_urlTextFieldController.text
-        .trim()
-        .isEmpty) {
+    if (_urlTextFieldController.text.trim().isEmpty) {
       return;
     }
 

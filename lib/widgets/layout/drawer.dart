@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_stream_player/core/colors.dart';
 import 'package:tiny_stream_player/widgets/layout/drawer_button.dart';
@@ -81,7 +80,10 @@ final class TspDrawerState extends State<TspDrawer>
 
   Widget _buildDrawer() {
     return FractionalTranslation(
-      translation: Tween<Offset>(begin: const Offset(0, -1), end: const Offset(0, 0)).animate(_easeAnimation).value,
+      translation:
+          Tween<Offset>(begin: const Offset(0, -1), end: const Offset(0, 0))
+              .animate(_easeAnimation)
+              .value,
       child: Container(
         decoration: BoxDecoration(
           color: ThemeColors.gray[800],

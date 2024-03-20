@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget with WindowListener {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }

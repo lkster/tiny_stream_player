@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ui';
 import 'dart:async';
 
@@ -27,12 +26,14 @@ final class StreamPlayerController {
       player.stream.width,
       player.stream.height,
     ],
-  ).map(
+  )
+      .map(
     (List<int?> values) => Size(
       values[0]?.toDouble() ?? 1,
       values[1]?.toDouble() ?? 1,
     ),
-  ).doOnData((event) {
+  )
+      .doOnData((event) {
     _size = event;
   }).asBroadcastStream();
 
@@ -42,9 +43,11 @@ final class StreamPlayerController {
     },
   ).asBroadcastStream();
 
-  late final Stream<bool> isMutedChange = player.stream.volume.map(
+  late final Stream<bool> isMutedChange = player.stream.volume
+      .map(
     (event) => event > 0 ? false : true,
-  ).doOnData((event) {
+  )
+      .doOnData((event) {
     _isMuted = event;
   }).asBroadcastStream();
 

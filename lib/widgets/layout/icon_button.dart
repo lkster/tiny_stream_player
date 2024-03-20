@@ -33,7 +33,7 @@ final class _TspIconButtonState extends State<TspIconButton> {
             return Colors.white;
           }
 
-          return Color(0xffd9d9d9);
+          return const Color(0xffd9d9d9);
         }),
       ),
     );

@@ -40,7 +40,8 @@ final class _TspTextFieldState extends State<TspTextField> {
       maxLines: 1,
       controller: widget.controller,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         hintText: widget.hintText,
         isDense: true,
         hintStyle: TextStyle(

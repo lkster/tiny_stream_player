@@ -20,7 +20,7 @@ final class DrawerWindowButton extends WindowButton {
 final class _DrawerWindowButtonIcon extends StatelessWidget {
   final Color color;
 
-  const _DrawerWindowButtonIcon({super.key, required this.color});
+  const _DrawerWindowButtonIcon({required this.color});
 
   @override
   Widget build(BuildContext context) {

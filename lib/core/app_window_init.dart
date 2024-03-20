@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tiny_stream_player/core/preferences.dart';
@@ -20,7 +18,8 @@ Future<void> initAppWindow() async {
     await windowManager.setPosition(windowPosition);
   }
 
-  await windowManager.setAlwaysOnTop(await Preferences().windowAlwaysOnTop.load());
+  await windowManager
+      .setAlwaysOnTop(await Preferences().windowAlwaysOnTop.load());
 
   appWindow.show();
 }

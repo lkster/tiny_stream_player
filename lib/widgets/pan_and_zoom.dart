@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:window_manager/window_manager.dart';
 
 final class PanAndZoom extends StatefulWidget {

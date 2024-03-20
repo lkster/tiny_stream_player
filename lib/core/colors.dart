@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
-
 
 abstract final class ThemeColors {
   static const gray = ColorSwatch(0xff505e77, {
@@ -24,5 +21,3 @@ abstract final class ThemeColors {
   static const warning = Color(0xfff48f01);
   static const danger = Color(0xffec5e4d);
 }
-
-

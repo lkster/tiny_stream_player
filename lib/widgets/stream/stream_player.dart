@@ -28,6 +28,7 @@ final class _StreamPlayerState extends State<StreamPlayer> {
   @override
   void initState() {
     super.initState();
+    _aspectRatio = ((Size s) => s.width / s.height)(widget.controller.size);
 
     _subscribers.add(widget.controller.sizeChange.listen((e) {
       setState(() {

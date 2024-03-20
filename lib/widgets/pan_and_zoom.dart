@@ -65,6 +65,21 @@ final class _PanAndZoomWidgetState extends State<PanAndZoom>
     super.onWindowUnmaximize();
   }
 
+  void moveCanvasBy(Offset offset) {
+    setState(() {
+      position += offset;
+      _cachedPosition = position;
+      _fixPosition();
+    });
+  }
+
+  void scaleCanvasBy(double factor) {
+    setState(() {
+      scale = (scale * factor).clamp(widget.minZoom, widget.maxZoom);
+      _fixPosition();
+    });
+  }
+
   void _recalculatePositionAfterChildSizeChange() {
     final currentChildSize = _getChildSize();
     final Offset delta = Offset(
@@ -82,35 +97,25 @@ final class _PanAndZoomWidgetState extends State<PanAndZoom>
 
   void _onScrollWheel(PointerScrollEvent e) {
     final delta = e.scrollDelta.dy / 100;
+    final oldScale = scale;
 
-    setState(() {
-      scale *= 1 + widget.zoomFactor * -delta;
-      scale = scale.clamp(widget.minZoom, widget.maxZoom);
-      _previousChildSize = _getChildSize();
-      _fixPosition();
-    });
+    scaleCanvasBy(1 + widget.zoomFactor * -delta);
+
+    final scalePoint = e.localPosition - _getParentSize().center(Offset.zero);
+    final oldScaleScalePoint = scalePoint / oldScale;
+    final newScaleScalePoint = scalePoint / scale;
+
+    _previousChildSize = _getChildSize();
+
+    moveCanvasBy((newScaleScalePoint - oldScaleScalePoint));
   }
 
   void _onPan(DragUpdateDetails details) {
     final deltaOffset = details.delta / scale;
-    final parentSize = _getParentSize();
-    final childSize = _getChildSize();
-    var (double posX, double posY) = (0, 0);
 
-    if (childSize.width * scale > parentSize.width) {
-      posX = position.dx + deltaOffset.dx;
-    }
+    _previousChildSize = _getChildSize();
 
-    if (childSize.height * scale > parentSize.height) {
-      posY = position.dy + deltaOffset.dy;
-    }
-
-    setState(() {
-      position = Offset(posX, posY);
-      _cachedPosition = position;
-      _previousChildSize = childSize;
-      _fixPosition();
-    });
+    moveCanvasBy(deltaOffset);
   }
 
   void _fixPosition() {

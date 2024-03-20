@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiny_stream_player/core/colors.dart';
 import 'package:tiny_stream_player/widgets/window/window_colors.dart';
+import 'package:window_manager/window_manager.dart';
 
 final class WindowTitleBar extends StatefulWidget {
   final List<WindowButton> buttons;
@@ -14,7 +15,7 @@ final class WindowTitleBar extends StatefulWidget {
 }
 
 final class _WindowTitleBarState extends State<WindowTitleBar>
-    with WidgetsBindingObserver {
+    with WindowListener {
   WindowButtonColors _buttonColors = windowButtonColors;
   WindowButtonColors _closeButtonColors = windowCloseButtonColors;
   Color _titleColor = titleColor;
@@ -23,31 +24,50 @@ final class _WindowTitleBarState extends State<WindowTitleBar>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addObserver(this);
+    windowManager.addListener(this);
   }
 
   @override
   void dispose() {
     super.dispose();
 
-    WidgetsBinding.instance.removeObserver(this);
+    windowManager.removeListener(this);
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    setState(() {
-      if (state == AppLifecycleState.resumed) {
-        _buttonColors = windowButtonColors;
-        _closeButtonColors = windowCloseButtonColors;
-        _titleColor = titleColor;
-      } else {
-        _buttonColors = windowButtonBlurColors;
-        _closeButtonColors = windowCloseButtonBlurColors;
-        _titleColor = titleBlurColor;
-      }
-    });
+  void onWindowFocus() {
+    super.onWindowFocus();
 
-    super.didChangeAppLifecycleState(state);
+    setState(() {
+      _buttonColors = windowButtonColors;
+      _closeButtonColors = windowCloseButtonColors;
+      _titleColor = titleColor;
+    });
+  }
+
+  @override
+  void onWindowBlur() {
+    super.onWindowBlur();
+
+    setState(() {
+      _buttonColors = windowButtonBlurColors;
+      _closeButtonColors = windowCloseButtonBlurColors;
+      _titleColor = titleBlurColor;
+    });
+  }
+
+  @override
+  void onWindowMaximize() {
+    super.onWindowMaximize();
+
+    setState(() {});
+  }
+
+  @override
+  void onWindowUnmaximize() {
+    super.onWindowUnmaximize();
+
+    setState(() {});
   }
 
   Widget _buildMaximizeOrRestoreButton() {
